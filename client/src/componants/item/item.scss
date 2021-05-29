@@ -1,0 +1,108 @@
+.container-fluid{
+    width: 100%;
+    // display: flex;
+
+    .item-img{ 
+        height:auto; 
+
+        img{
+            margin-top: 30px;
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .item-details{ 
+        height:auto;
+            .item-name{
+                margin: 10px; 
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+            .item-price{
+                margin: 10px; 
+                font-size: 1.3rem;
+                color:red;
+            }
+            .item-discount{
+                margin: 10px; 
+            }
+            .item-active{
+                margin: 10px; 
+                color:red;
+            }
+            .item-info{
+                margin: 10px;  
+            }
+            
+    }
+    .cart-outer-sec{
+        padding: 2rem; 
+        .cart-sec{
+            width: 100%;
+            display: flex; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border:1px solid gray;
+            border-radius: 0.5rem; 
+            position:sticky;
+            top:132px;
+            .withexchange{
+                width: 100%;
+                height: 2.5rem;
+                background-color: rgba(128, 128, 128, 0.248); 
+                display: flex;
+                align-items: center; 
+                border-radius: 0.5rem 0.5rem 0 0;
+            }
+
+            .withoutexchange{
+                width: 100%;
+                height: 5rem; 
+                display: flex;
+                flex-direction: column; 
+                margin: 1rem 0;
+                h6{
+                   margin:1rem;
+                }
+                p{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                   
+                    span{
+                        color:red;
+                        margin-left: 1rem;
+                        text-decoration: line-through;
+                    }
+                }
+
+            }
+            .addtocart,.buynow{
+                width: 90%;
+                height: 2rem;
+                background-color: orange;
+                border-radius: 3rem;
+                color:white;
+                border:none; 
+                margin:0.6rem;
+                outline:none;
+            }
+            .order-diliver-to{
+                font-size: 1rem;
+                padding: 0.5rem;
+                margin: 2rem 0;
+            }
+        }
+        .addtowishlist{
+            width: 100%;
+            height: 2rem;
+            margin-top: 1rem;
+            border: 1px solid gray;
+            border-radius: 4px;
+            position:sticky;
+            top:532px;
+        }
+    }
+}
