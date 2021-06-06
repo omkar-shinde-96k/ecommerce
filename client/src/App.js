@@ -10,6 +10,10 @@ import Register from './componants/register/Register.js';
 import Login from './componants/login/Login.js';
 import Dashbord from './componants/Dashbord/Dashbord.js';
 import Admin from './componants/Admin/Admin.js';
+ 
+import Cart from './componants/Cart/Cart'
+import Orders from './componants/Orders/Orders';
+import Profile from './componants/Profile/Profile';
 
 import {
   BrowserRouter as Router,
@@ -39,6 +43,10 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/dashbord' component={Dashbord} />
           <Route path='/admin' component={Admin} />
+
+          <Route path='/cart' component={Cart} />
+          <Route path='/orders' component={Orders} />
+          <Route path='/profile' component={Profile} />
           <Route component={NotFound} />
         </Switch>
         <Footer />

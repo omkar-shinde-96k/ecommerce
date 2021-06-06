@@ -1,0 +1,50 @@
+.order{
+    display: flex;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.493); 
+    margin-bottom: 20px;
+    margin-top: 20px;
+    height: 250px;
+
+    .order-img{
+        width: 40%;
+        height: 100%;
+        img{
+            width: 90%;
+            height: 100%;
+        }
+    }
+    .order-details{
+        width: 60%;
+        height: 100%;
+        .order-name{ 
+            font-size:1.5rem;
+            padding: 10px;
+        }
+        .order-status{
+            font-size:1.2rem;
+            span{
+                color:red;
+            }
+        }
+        .order-delivar{
+            span{
+                font-weight: bold;
+            }
+        }
+        .order-price{
+            font-size: 1rem;
+        }
+        .payment-method{
+            font-size: 1rem;
+        }
+        .order-quantity{
+            font-size: 1rem;
+        }
+        .order-address{
+            font-size: 1rem;
+        }
+        .order-date{
+            color:rgb(9, 34, 255);
+        }
+    }
+}

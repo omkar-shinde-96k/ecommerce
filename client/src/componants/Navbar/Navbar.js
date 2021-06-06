@@ -23,8 +23,7 @@ const Navbar = () => {
             } 
         });
 
-        const data = await res.json();
-        // console.log("navdata",data);
+        const data = await res.json(); 
         setCartLen(data.cart.length)
     },[CartLen])
 
@@ -41,7 +40,7 @@ const Navbar = () => {
 
                 <div className="deliver-to">
                     <div className="deliver-to-icon"><i class="fa fa-map-marker"></i></div>
-                    <div className="deliver-to-location"><NavLink className="navlink" to="/dashbord/profile" >Deliver to </NavLink>  <span><NavLink className="navlink" to="/dashbord/profile" >Select your address</NavLink></span> </div>
+                    <div className="deliver-to-location"><NavLink className="navlink" to="/profile" >Deliver to </NavLink>  <span><NavLink className="navlink" to="/profile" >Select your address</NavLink></span> </div>
                 </div>
 
                 <div className="search">
@@ -53,11 +52,11 @@ const Navbar = () => {
                 <div className="lang"><div><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/255px-Flag_of_India.svg.png" alt="country img" width="100%" height="100%" /></div></div>
 
                 <div className="profile-media">sign in</div>
-                <div className="profile"><NavLink className="navlink" to="/dashbord/profile" ><div>Hello,sign in <span>Account & Lists</span></div></NavLink></div>
+                <div className="profile"><NavLink className="navlink" to="/profile" ><div>Hello,sign in <span>Account & Lists</span></div></NavLink></div>
 
-                <div className="orders"><NavLink className="navlink" to="/dashbord/orders">Returns <br /> <span>& Orders</span></NavLink></div>
+                <div className="orders"><NavLink className="navlink" to="/orders">Returns <br /> <span>& Orders</span></NavLink></div>
 
-                <div className="cart"><NavLink className="navlink" to="/dashbord/"><i class="fa fa-shopping-cart"></i></NavLink> <span> {CartLen} </span></div>
+                <div className="cart"><NavLink className="navlink" to="/cart"><i class="fa fa-shopping-cart"></i></NavLink> <span> {CartLen} </span></div>
             </div>
 
             <div className="search-media">
