@@ -29,65 +29,20 @@ async function updateOrder(req, res, next) {
       res.json({ result, msg: "update order" })
 }
 
-async function placeOrders(req, res, next) {
-
-      // const schema = Joi.object({
-      //       orders: Joi.array().items({
-      //             product: Joi.string().required(),
-      //             user: Joi.string().required(),
-      //             address: Joi.string().required(),
-      //             quantity: Joi.number().min(1).required(),
-      //             price: Joi.number().required(),
-      //             status: Joi.string().required(),
-      //             payment_method: Joi.string().required()
-      //       }).required().min(1),
-      // });
-
-      // const validationResult = schema.validate(req.body)
-      // console.log(req.body);
-      // if (validationResult.error) {
-      //       return next(new Error(validationResult.error.details[0].message))
-      // }
-
-      // const { orders } = validationResult.value;
+async function placeOrders(req, res) { 
+      const { orders } = req.body;
+      console.log("body is",req.body);
 
       // for (index in orders) {
-      //       let order = orders[index]
-      //       let productResults = await Product.findOne({ _id: order.product }, { new: true })
-      //       orders[index].price = productResults.price;
-      // }
+      //       let order = orders[index];
+      //       let productId = order.product;
+      //       let price = (await Product.findOne({ _id:productId})).price;
+      //       orders[index].price =price;
+      // } 
 
-      // const saveResult = await Order.create(orders)
-
-     
-
-      const { payment_method,status,product,user,address,quantity,price}=req.body;
-
-      console.log(quantity);
-
-      const order = new Order({
-            payment_method,
-            status,
-            product,
-            quantity,
-            price,
-            address,
-            user
-        })
-        order.save().then(result=>{
-            res.json({orders:result})
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    
+      const saveResult = await Order.create(orders)
+      res.json({ orders:saveResult,msg:"orderplaced" });
  
-      // console.log(saveResult);
-
-
-
-
-      // res.json({ orders: saveResult });
 }
 
 module.exports = { getOrders, placeOrders, deleteOrder, updateOrder }

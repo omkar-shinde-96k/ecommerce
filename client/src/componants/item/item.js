@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './item.scss';
 import { useParams } from 'react-router';
-import { NavLink } from "react-router-dom" 
-import jwt_decode from "jwt-decode";
-// import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from "react-router-dom"
+// import jwt_decode from "jwt-decode"; 
 
-const Item = () => {
-
-    let user = jwt_decode(localStorage.getItem("jwt"));
-
-    console.log("user", user);
+const Item = () => { 
 
     const { id } = useParams();
-
     const [Product, setProduct] = useState([])
     const [Address, setAddress] = useState([])
 
-    useEffect(async() => {
+    useEffect(async () => {
 
         const apiUrl = `/api/product/${id}`;
         fetch(apiUrl)
@@ -24,68 +18,67 @@ const Item = () => {
             .then((data) => {
                 setProduct(data.product)
             }); 
-
-
-        const res = await fetch('/api/users',{
-            method:"GET",
-            headers:{
+        const res = await fetch('/api/users', {
+            method: "GET",
+            headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt") 
-            } 
-        }) 
-        const addr = await res.json(); 
-        console.log("addresss",addr);
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        })
+        const addr = await res.json();
         setAddress(addr[0])
 
     }, []);
 
-    console.log("ner add",Address.first_name);
 
     const Cart = async () => {
+        let products = [];
 
-        // products.push({ _id: Product[0]._id, name: Product[0].name, price: Product[0].price, discount: Product[0].discount, quantity: "1" });
+        if (!JSON.parse(localStorage.getItem('products'))) {
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+        
+        products = JSON.parse(localStorage.getItem('products'))
 
-        // localStorage.setItem('products', JSON.stringify(products));
+            // JSON.parse(localStorage.getItem('products')).map((find)=>{
+            //           if (find._id===id) {
+            //             return  alert("product already added to cart")
+            //           } 
+                        // products.push({ _id: Product[0]._id, name: Product[0].name, price: Product[0].price, discount: Product[0].discount, quantity: 1 });
+
+                        // localStorage.setItem('products', JSON.stringify(products)); 
+
+                        // alert("product added to Cart")  
+                // })  
+
+        products.push({ _id: Product[0]._id, name: Product[0].name, price: Product[0].price, discount: Product[0].discount, quantity: 1 });
+
+        localStorage.setItem('products', JSON.stringify(products)); 
+        
+        alert("product added to Cart")  
+
 
         // let user = jwt_decode(localStorage.getItem("jwt"));
 
-        // console.log("user", user);
+        // console.log("user", user); 
+ 
 
+        // const res = await fetch("/api/cart", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Authorization": "Bearer " + localStorage.getItem("jwt")
+        //     },
+        //     body: JSON.stringify({
+        //         user_id: user._id,
+        //         product: Product[0]._id,
+        //     })
+        // });
 
-        const res = await fetch("/api/cart", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
-            },
-            body: JSON.stringify({
-                user_id: user._id,
-                product: Product[0]._id,
-            })
-        });
-
-        const data = await res.json();
-
-        console.log(data);
-        if (data.error) {
-            window.alert("This " + data.error)
-        }
-
-        if (data.msg) {
-            window.alert(data.msg)
-        }
+        // const data = await res.json(); 
     }
 
-    // let products = [];
 
-    // if (localStorage.getItem('products')) {
-    //     products = JSON.parse(localStorage.getItem('products'));
-    // }
-    // const result = JSON.parse(localStorage.getItem('products'))
-
-    // if (localStorage.getItem('products')) {
-    //     console.log("result is", result[0].name);
-    // }
 
     return (
         <>
@@ -98,26 +91,21 @@ const Item = () => {
 
                         {Product.map((element, index) => (
                             <>
-
                                 <div className="item-name"> {element.name} </div>
-
                                 <div className="item-price"> Rs. {element.price} /- </div>
-
                                 <div className="item-discount"> {element.discount}% Discount </div>
-
                                 <div className="item-active">
-
                                     {(() => {
                                         if (!element.active) {
                                             return "Currently Unavailable"
                                         }
                                     })()}
 
-                                </div> 
+                                </div>
 
                                 <div className="item-info">
-                                <h5>About this item </h5>
-                                   <pre> {element.details}</pre>
+                                    <h5>About this item </h5>
+                                    <pre> {element.details}</pre>
                                 </div>
 
                             </>
@@ -135,7 +123,7 @@ const Item = () => {
                                     {Product.map((element, index) => (
                                         <>
                                             Rs. {element.price}
-  
+
                                             <span>Rs.{element.price + 500}</span>
                                         </>
                                     ))}

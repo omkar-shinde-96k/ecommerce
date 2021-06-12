@@ -1,7 +1,5 @@
 $mainBackground: rgba(174, 174, 174, 0.178);
-body{
-    background-color: $mainBackground; 
-}
+ 
 .main{
     background-color: $mainBackground; 
     display: flex;  
@@ -48,6 +46,10 @@ body{
             }
             .CartDetails{
                 width: 80%;
+                .delivery_charges{
+                    color:rgb(0, 145, 255);
+                    margin: 10px 0px;
+                }
                 .product-name{
                     width: 90%;
                     font-weight:normal;  
@@ -104,7 +106,7 @@ body{
         .buy{
             padding: 1rem;
             background-color: white;
-            height: 10rem;
+            height: 13rem;
             margin-top: 1rem;
             p{
                 font-size: 12px;
@@ -117,6 +119,10 @@ body{
                 border: none;
                 outline: none;
                 border-radius: 6px;
+                margin-bottom: 1rem;
+            }
+            button *{
+                color:white;
             }
         }
         .recentlyViewed{

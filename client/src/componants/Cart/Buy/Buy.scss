@@ -1,0 +1,30 @@
+.buyComp{
+    .buy-address{ 
+        width: 250px;
+        button{
+            background-color: orange;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color:white;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .edit-add{
+            display: flex;
+            button{
+                background-color: rgba(128, 128, 128, 0.37);
+                border:1px solid gray; 
+                color:black;
+                width: 45%;
+                height: 23px;
+                padding:5px 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 0.8rem;
+                border-radius: 3px ;
+            }
+        }
+    }
+}

@@ -5,7 +5,19 @@ import { useHistory} from 'react-router-dom'
 const  Orders = () => {
  
     const history = useHistory(); 
-    const [Data, setData] = useState([])
+    const [Data, setData] = useState([ {
+        "quantity": 5,
+        "payment_method": "COD",
+        "status": "placed",
+        "_id": "60c2eaa2b2809347b8ffd36c",
+        "product": {"name":"Loading.."},
+        "price": 800,
+        "address": "mumbai",
+        "user": "608a276319a7293be847dcc6",
+        "created_at": "2021-06-11T04:46:26.123Z",
+        "updated_at": "2021-06-11T04:46:26.123Z",
+        "__v": 0
+    }])
  
     useEffect(async() => {
         const res = await fetch('/api/orders',{
@@ -15,11 +27,10 @@ const  Orders = () => {
                 "Authorization": "Bearer " + localStorage.getItem("jwt") 
             } 
         }) 
-        const data = await res.json(); 
-        console.log(data.orders);
+        const data = await res.json();  
         setData(data.orders) 
-    }, [Data])
-  
+    }, [])
+    console.log("heu",Data);
     return (
         <>
           
@@ -39,7 +50,7 @@ const  Orders = () => {
 
                             <div className="order-price">Order Total Rs. {item.product.price}</div>
 
-                            <div className="order-quantity">Quantity : 4</div>
+                            <div className="order-quantity">Quantity :{item.quantity}</div>
 
                             <div className="payment-method">Rs.Cash On Delivery({item.payment_method })</div>
 

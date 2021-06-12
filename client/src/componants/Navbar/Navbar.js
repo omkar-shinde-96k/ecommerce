@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
 
-    const [CartLen, setCartLen] = useState("")
+    const [CartLen, setCartLen] = useState("0")
 
     useEffect(async() => {
         // const CartLength = JSON.parse(localStorage.getItem('products'))
@@ -23,8 +23,12 @@ const Navbar = () => {
             } 
         });
 
-        const data = await res.json(); 
-        setCartLen(data.cart.length)
+        const data = await res.json();  
+        
+        if (data.cart) {
+            setCartLen(data.cart.length)
+        }
+
     },[CartLen])
 
     return (

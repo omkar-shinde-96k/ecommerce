@@ -16,7 +16,7 @@ async function addCart(request, response, next) {
 
     var productData = await Cart.find({product});
 
-    console.log("product", productData[0]);
+    // console.log("product", productData[0]);
 
     if (productData[0]) {
         console.log("product already in cart");
@@ -35,9 +35,25 @@ const getCart=async(req,res,next)=>{
         path:"product"
     }]);
 
-    console.log("cart product", cart);
+    // console.log("cart product", cart);
 
     res.json({cart})
 }
 
-module.exports = { addCart , getCart }
+const updateCart=async(req,res,next)=>{
+ 
+    const productId = req.params.productId;
+    console.log("oooooo",productId);
+
+    const user = await Cart.findOneAndUpdate(
+        {_id:productId}, { $set: req.body}, { new: true }
+  ); 
+
+
+
+    // console.log("quantity added", user);
+
+    res.json({user})
+}
+
+module.exports = { addCart , getCart,updateCart }
