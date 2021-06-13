@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect, useState } from "react";
+import React, { createContext, useReducer, useEffect, useState } from "react";
 import './App.css';
 import NotFound from './componants/404.js';
 import Navbar from './componants/Navbar/Navbar.js';
@@ -29,14 +29,14 @@ const Home = () => {
 
 function App() {
 
-  const [User, setUser] = useState("hello")
+  const [User, setUser] = useState({})
 
   const initialState = {
     item: JSON.parse(localStorage.getItem('products')),
     totalAmount: 0,
     totalItem: 0,
-    User: "temp"
-  };
+    User:"user"
+  }
 
   const [state, dispatch] = useReducer(Reducer, initialState);
 
@@ -48,7 +48,7 @@ function App() {
     return dispatch({ type: "REMOVE_ITEM", payload: _id });
   };
 
-  const increment = (_id, price) => {
+  const increment = (_id) => {
     return dispatch({
       type: "INCREMENT", payload: _id});
   };
@@ -66,7 +66,7 @@ function App() {
       }
     })
     const data = await res.json();
-    setUser(data.[0])
+    setUser(data[0])
   }
 
   useEffect(() => {
@@ -78,7 +78,7 @@ function App() {
     <>
       <Router>
         <Navbar />
-        <ContextApi.Provider value={{ ...state, User, clearCart, removeItem, increment, decrement }}>
+        <ContextApi.Provider value={{ ...state,User, clearCart, removeItem, increment, decrement }}>
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/products/:id' component={Products} />
@@ -88,10 +88,10 @@ function App() {
             <Route path='/dashbord' component={Dashbord} />
             <Route path='/admin' component={Admin} />
 
-            <Route path='/cart' component={Cart} />
+            {/* <Route path='/cart' component={Cart} /> */}
             <Route path='/orders' component={Orders} />
             <Route path='/profile' component={Profile} />
-            <Route path='/buy' component={Buy} />
+            {/* <Route path='/buy' component={Buy} /> */}
             <Route component={NotFound} />
           </Switch>
         </ContextApi.Provider>

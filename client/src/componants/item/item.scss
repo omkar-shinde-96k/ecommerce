@@ -1,13 +1,11 @@
 .container-fluid{
-    width: 100%;
-    // display: flex;
-
+    // width: 100%; 
     .item-img{ 
-        height:auto; 
-
+        height:auto;  
         img{
             margin-top: 30px;
             width: 100%;
+            height: 100%;
             height: auto;
         }
     }
@@ -31,9 +29,9 @@
                 margin: 10px; 
                 color:red;
             }
-            .item-info{
-                margin: 10px;  
-            }
+            // .item-info{
+            //     margin: 10px;  
+            // }
             
     }
     .cart-outer-sec{
@@ -105,4 +103,74 @@
             top:532px;
         }
     }
+    .qna{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        input{
+            width: 80%;
+            margin-bottom: 2rem;
+        }
+    }
+    .reviews{
+        // height: 500px;
+        width: 100%;
+        .row{
+            // height: 1000px;
+            width: 100%;
+            .stars{
+
+            }
+            .write-review{
+                form{
+                    display: flex;
+                    flex-direction: column;
+                    input{
+                        width: 80%;
+                        margin-bottom: 1rem;
+                        height: 2.5rem;
+                    }
+                    button{
+                        border:none;
+                        width: 100px;
+                        padding: 5px 10px;
+                        margin-left: 1rem;
+                    }
+                }
+                
+            }   
+            .buyers-reviews{
+                .buyers{
+                    display: flex; 
+                    width: 300px;
+                    height: 30px;
+                    .buyers-img{
+                        width: 30px;
+                        background-color: blue;
+                        border-radius: 50%;
+                    }
+                    .buyers-name{
+                        display: grid;
+                        place-items: center;
+                    }
+                }
+                .buyer-rating-title{
+                    display: flex;
+                    .buyers-rating{
+        
+                    }
+                    .buyer-title{
+        
+                    }
+                }
+                p{
+        
+                }
+                .detail-review{
+        
+                }
+            }
+        }
+    }
+    
 }

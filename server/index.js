@@ -12,6 +12,7 @@ const { orderRouter } = require('./router/order-router');
 const { productRouter } = require('./router/product-router');
 const { userRouter } = require('./router/user-router');
 const { cartRouter } = require('./router/cart-router');
+const { ratingRouter } = require('./router/rating-router');
 
 app.use(express.json());
 app.use(morgan('dev')); 
@@ -28,6 +29,7 @@ APIRouter.use('/product', productRouter)
 APIRouter.use('/orders', orderRouter)
 APIRouter.use('/categories', categoryRouter)
 APIRouter.use('/cart', cartRouter)
+APIRouter.use('/rating', ratingRouter)
 
  
 APIRouter.get("/"+process.env.UPLOAD_FOLDER+"/*", (req, res, next) => {

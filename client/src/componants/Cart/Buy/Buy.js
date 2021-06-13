@@ -3,7 +3,7 @@ import './Buy.scss'
 import { ContextApi } from "../../../App";
 const Buy = () => {
  
-    const { item, totalAmount,totalItem, clearCart, removeItem, increment, decrement,User } = useContext(ContextApi);  
+    const { item, totalAmount,User } = useContext(ContextApi);  
 
     const postorder = async() => {
        

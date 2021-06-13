@@ -1,13 +1,11 @@
-import React, { createContext, useContext, useReducer,useEffect } from "react";
+import React, {useContext} from "react";
 import './Cart.scss';  
 import { Scrollbars } from 'react-custom-scrollbars';
-import {
-    BrowserRouter as Router, 
-    NavLink
-} from "react-router-dom"; 
+import {NavLink} from "react-router-dom"; 
 import {ContextApi } from "../../App";
 const Cart = () => {
     const { item, totalAmount,totalItem, clearCart, removeItem, increment, decrement } = useContext(ContextApi);
+ 
     return (
         <>
               <div className="main">
@@ -47,8 +45,7 @@ const Cart = () => {
                                 </>
                             ))}
                         </Scrollbars>
-                        : 'Your Cart Is Empty'}
-
+                        : 'Your Cart Is Empty'} 
                 </div>
 
                 <div className="proceedToCheckout col-xl-3">

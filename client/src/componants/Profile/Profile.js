@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import './Profile.scss'
+
 const Profile = () => {
+
+
 
     const [user, setUser] = useState({
         first_name: "", last_name: "", email: "", phone: "", address: "", password: "", repassword: ""

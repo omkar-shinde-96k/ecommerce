@@ -54,17 +54,14 @@ function validateUserForRegistration(user) {
 }
 
 async function saveUser(request, response, next) {
-      const result = validateUserForRegistration(request.body)
-      console.log("data", result);
+      const result = validateUserForRegistration(request.body) 
       if (result.error) {
-            response.status(400);
-            console.log("error", result.error);
+            response.status(400); 
             return next(new Error(result.error.details[0].message))
       }
       const userData = result.value;
       if (userData.password != userData.repassword) {  // both pass match or not
-            response.status(400);
-            console.log(" password not match");
+            response.status(400); 
             return next(new Error('password not matched'))
       }
       let isExists = await User.isExists(userData.email)  // is this email exist 
