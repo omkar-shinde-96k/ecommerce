@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import './Cart.scss';  
-import { Scrollbars } from 'react-custom-scrollbars';
+// import { Scrollbars } from 'react-custom-scrollbars';
 import {NavLink} from "react-router-dom"; 
 import {ContextApi } from "../../App";
 const Cart = () => {
@@ -15,7 +15,7 @@ const Cart = () => {
                     </div>
                     <hr /> 
                     {totalItem?
-                        <Scrollbars style={{ margin: "0", padding: "0", height: "430px" }}>
+                        <div style={{ margin: "0", padding: "0", height: "430px" }}>
 
                             {item.map((element, index) =>
                             (
@@ -44,7 +44,7 @@ const Cart = () => {
                                     <hr />
                                 </>
                             ))}
-                        </Scrollbars>
+                        </div>
                         : 'Your Cart Is Empty'} 
                 </div>
 

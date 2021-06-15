@@ -49,13 +49,10 @@ function App() {
   };
 
   const increment = (_id) => {
-    return dispatch({
-      type: "INCREMENT", payload: _id});
+    return dispatch({ type: "INCREMENT", payload: _id});
   };
 
-  const decrement = (_id, curr) => {
-    return dispatch({ type: "DECREMENT",payload:_id});
-  };
+  const decrement = (_id, curr) => { return dispatch({ type: "DECREMENT",payload:_id});};
 
   const userFunc = async () => {
     const res = await fetch('/api/users', {
@@ -88,10 +85,10 @@ function App() {
             <Route path='/dashbord' component={Dashbord} />
             <Route path='/admin' component={Admin} />
 
-            {/* <Route path='/cart' component={Cart} /> */}
+            <Route path='/cart' component={Cart} />
             <Route path='/orders' component={Orders} />
             <Route path='/profile' component={Profile} />
-            {/* <Route path='/buy' component={Buy} /> */}
+            <Route path='/buy' component={Buy} />
             <Route component={NotFound} />
           </Switch>
         </ContextApi.Provider>

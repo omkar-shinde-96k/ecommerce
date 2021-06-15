@@ -1,10 +1,10 @@
 const mongoose = require('mongoose'); 
 
 const ratingSchema = new mongoose.Schema({
-    user: { type: mongoose.Types.ObjectId, ref: 'user'},
-    product: { type: mongoose.Types.ObjectId, ref: 'product' },
+    user: { type: mongoose.Types.ObjectId, ref: 'user',required:true },
+    product: { type: mongoose.Types.ObjectId, ref: 'product',required:true },
     rating: { type: Number },
-    title: { type: String },
+    title: { type: String,required:true},
     details: { type: String }
 
 }, {

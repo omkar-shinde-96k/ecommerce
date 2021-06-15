@@ -3,16 +3,16 @@ import './item.scss';
 import { useParams } from 'react-router';
 import { ContextApi } from '../../App'
 import { NavLink } from "react-router-dom";
-import { Scrollbars } from 'react-custom-scrollbars';
+// import { Scrollbars } from 'react-custom-scrollbars';
 const Item = () => {
 
     const { id } = useParams();
     const [Product, setProduct] = useState([{ name: "loading..." }])
-    const [rating, setRating] = useState({title:" ",details:" "})
+    const [rating, setRating] = useState({title:"",details:""})
     const [getrating, setgetRating] = useState([])
+    const [autoreload, setautoreload] = useState(true)
 
     let { User } = useContext(ContextApi); 
-
 
     const handleInputs = (event) => { 
         let name = event.target.name;
@@ -36,15 +36,11 @@ const Item = () => {
                 details 
             })
         }); 
-        const data = await res.json(); 
-
-        setRating({title:"hello",details:""})
-
-        if (res.status === 400 || !data) {
-            window.alert(data.error)
-        } else {
-            localStorage.setItem('jwt', data.token);
-            window.alert(data.msg) 
+        const data = await res.json();  
+        setRating({title:"",details:""}) 
+        setautoreload(!autoreload)
+        if (res.status === 400 || !data) { 
+            window.alert("please check your internet connection")
         } 
     }
 
@@ -56,7 +52,7 @@ const Item = () => {
             .then((data) => {
                 setProduct(data.product)
             }); 
-            const res = await fetch('/api/rating', {
+            const res = await fetch(`/api/rating/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -64,12 +60,9 @@ const Item = () => {
                 }
             })
             const data = await res.json(); 
-            setgetRating(data.rating)   
-            console.log("getrating",getrating);
-    },[]);
-
- 
-    
+            setgetRating(data.rating)    
+    },[autoreload]); 
+   
     const Cart = async () => {
         let products = [];
         if (!JSON.parse(localStorage.getItem('products'))) {
