@@ -20,10 +20,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 export const ContextApi = createContext();
 const Home = () => {
   return (
-    <>
+    <div style={{width:"100%"}}>
       <Slider />
       <Categories />
-    </>
+    </div>
   )
 }
 
@@ -72,7 +72,7 @@ function App() {
   }, [state.item]);
   
   return (
-    <>
+    <div style={{width:"99.70vw"}}>
       <Router>
         <Navbar />
         <ContextApi.Provider value={{ ...state,User, clearCart, removeItem, increment, decrement }}>
@@ -85,7 +85,7 @@ function App() {
             <Route path='/dashbord' component={Dashbord} />
             <Route path='/admin' component={Admin} />
 
-            <Route path='/cart' component={Cart} />
+            <Route path='/cart' component={Cart}  />
             <Route path='/orders' component={Orders} />
             <Route path='/profile' component={Profile} />
             <Route path='/buy' component={Buy} />
@@ -93,8 +93,8 @@ function App() {
           </Switch>
         </ContextApi.Provider>
         <Footer />
-      </Router>
-    </>
+      </Router> 
+    </div>
   );
 }
 

@@ -1,10 +1,29 @@
-import React, {useContext} from "react";
+import React, {useContext,useState,useEffect} from "react";
 import './Cart.scss';  
 // import { Scrollbars } from 'react-custom-scrollbars';
 import {NavLink} from "react-router-dom"; 
 import {ContextApi } from "../../App";
 const Cart = () => {
+
     const { item, totalAmount,totalItem, clearCart, removeItem, increment, decrement } = useContext(ContextApi);
+
+console.log("hey",item);
+        // **********************************************
+        const Img = ({ img }) => {
+            const [pimg, setPimg] = useState()
+            useEffect(async () => {
+                const apiUrl = `/api/${img}`;
+                const imgu = await fetch(apiUrl)
+                console.log("hiii",imgu);
+                console.log("link",img);
+                setPimg(imgu.url)
+            }, []);
+            return (
+                <>
+                    <img src={pimg} alt="cart-img" />
+                </>
+            )
+        }
  
     return (
         <>
@@ -15,14 +34,14 @@ const Cart = () => {
                     </div>
                     <hr /> 
                     {totalItem?
-                        <div style={{ margin: "0", padding: "0", height: "430px" }}>
+                        <div style={{ margin: "0", padding: "0", height: "430px" , overflow:"scroll"}}>
 
                             {item.map((element, index) =>
                             (
                                 <>
                                     <div className="cart-items">
                                         <div className="cart-img">
-                                            <img src="https://images-na.ssl-images-amazon.com/images/I/51IIMW6-TbL.jpg" alt="cart-img" />
+                                          <Img img={element.img}/>
                                         </div>
                                         <div className="CartDetails">
                                             <div className="product-name">{element.name}</div>

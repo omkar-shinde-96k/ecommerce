@@ -10,8 +10,7 @@ const AddProduct = () => {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             }
         })
-        const data = await res.json();
-        // console.log("categories", data.categories);
+        const data = await res.json(); 
         setCategory(data.categories)
     }, [])
 
@@ -76,22 +75,22 @@ const AddProduct = () => {
 
                 <div className="inputbox">
                     <span>Name :</span>
-                    <input type="text" onChange={InputHandler} autoComplete="off" name="name" placeholder="Enter product name" />
+                    <input type="text" onChange={InputHandler} autoComplete="off" name="name" placeholder="&nbsp; Enter product name" />
                 </div>
 
                 <div className="inputbox">
                     <span>More Info :</span>
-                    <input type="text" onChange={InputHandler} name="details" placeholder="Enter product Information" />
+                    <input type="text" onChange={InputHandler} name="details" placeholder="&nbsp;Enter product Information" />
                 </div>
 
                 <div className="inputbox">
                     <span>Price :</span>
-                    <input type="number" onChange={InputHandler} name="price" placeholder="Enter Product Price" />
+                    <input type="number" onChange={InputHandler} name="price" placeholder="&nbsp;Enter Product Price" />
                 </div>
 
                 <div className="inputbox">
                     <span>Discount :</span>
-                    <input type="number" onChange={InputHandler} name="discount" placeholder="Discount" />
+                    <input type="number" onChange={InputHandler} name="discount" placeholder="&nbsp;Discount" />
                 </div>
 
                 <div className="inputbox">

@@ -12,7 +12,7 @@ async function getProduct(req, res) {
       const product = await Product.find({_id})
       res.json({product})
 }
-
+// ******************************************
 function validateProduct(data) {   //data == request.body
       const productSchema = Joi.object({
             name: Joi.string().required(),

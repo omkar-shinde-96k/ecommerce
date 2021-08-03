@@ -14,23 +14,43 @@ const AllOrders = () => {
             }
         })
         const result = await res.json()
-        // console.log(result.orders);
         setData(result.orders)
 
     }, [])
 
+    // ********************* img *************************
+    const Img = ({ img }) => {
+        const [pimg, setPimg] = useState()
+        useEffect(async () => {
+            const apiUrl = `/api/${img}`;
+            const imgu = await fetch(apiUrl)
+            setPimg(imgu.url)
+        }, []);
+        return (<img src={pimg} />)
+    }
+
     return (
         <>
             <h2>Orders</h2>
+            
+            <div className="index"> 
+                <div className="imgname"></div>
+                <div className="product-name">Product Name</div>
+                <div className="address">Address</div> 
+                <div className="status">Status</div>
+                <div className="quantity">Quantity</div>
+                <div className="total">Total</div>
+                <div className="delete">Delete</div>
+            </div>
+
             {Data.map((item) => {
                 return (
-
-                    <div className="order">
+                    <div className="admin-order">
                         <div className="order-img">
-                            <img src="https://images-na.ssl-images-amazon.com/images/I/51IIMW6-TbL.jpg" alt="order-image" />
+                            <Img img={item.product.productImage} />
                         </div>
                         <div className="order-name">
-                            {/* {item.product.name} */}
+                            {item.product.name}
                         </div>
                         <div className="order-address">
                             {item.address}
@@ -51,7 +71,7 @@ const AllOrders = () => {
                         </div>
                         <div className="order-delete">
                             delete
-                    </div>
+                        </div>
                         <br />
                     </div>
 

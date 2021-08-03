@@ -16,14 +16,13 @@ const Reducer = (state, action) => {
       let increment = state.item.map((cur) => {
         if (cur._id === _id) {
           const originalprice = cur.price
-          return { ...state.item[_id], _id, quantity: cur.quantity + 1, name: cur.name, price: cur.price, total: cur.total + cur.price, discount: cur.discount };
+          return { ...state.item[_id], _id, quantity: cur.quantity + 1,img:cur.img, name: cur.name, price: cur.price, total: cur.total + cur.price, discount: cur.discount };
         }
         return cur;
       });
       localStorage.setItem('products', JSON.stringify(increment));
       return { ...state, item: increment };
-    }
-  
+    } 
     if (action.type === "DECREMENT") {
       const _id  = action.payload; 
       let increment = state.item.map((ele) => {
@@ -37,22 +36,27 @@ const Reducer = (state, action) => {
       }) 
       localStorage.setItem('products', JSON.stringify(lesszero));
       return { ...state, item: lesszero };
-    }
-  
-  
+    } 
     if (action.type === "GET_TOTAL") {
       let { totalItem, totalAmount } = state.item.reduce(
         (accum, curVal) => {
           let { price, quantity } = curVal; 
-          let updatedTotalAmount = price * quantity;
+
+
+
+
+
+
+
+
+
+                    let updatedTotalAmount = price * quantity;
           accum.totalAmount += updatedTotalAmount; 
           accum.totalItem += quantity;
           return accum;
         },
-        {
-          totalItem: 0,
-          totalAmount: 0,
-        }
+        { totalItem: 0,
+          totalAmount: 0, }
       );
       return { ...state, totalItem, totalAmount };
     }

@@ -3,28 +3,7 @@ import {  NavLink } from "react-router-dom";
 import './Categories.scss'
 const Categories = () => {
 
-    const Category = (props) => {
-        const productidlink = "products/"+props.id;
-        return (
-
-            <div className="Category col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
-                <div className="Category-name">
-                    {props.name}
-                </div>
-
-                <div className="Category-img">
-                    <img src={props.img} alt="category img"/>
-                </div>
-
-                <div className="shop-now">
-                    <NavLink to={productidlink}>shop now</NavLink>
-                    </div>
-            </div>
-        )
-    }
-
-    const [Name, setName] = useState([])
-    // const [img, setImg] = useState([])
+    const [Name, setName] = useState([]) 
  
     useEffect(() => { 
         const apiUrl = `/api/categories`;
@@ -34,14 +13,41 @@ const Categories = () => {
              setName(data.categories)
           });
       },[]); 
+
+    const Category = (props) => {
+        const productidlink = "products/"+props.id;
+
+        const [pimg, setPimg] = useState() 
+        useEffect(async () => { 
+            const apiUrl = `/api/${props.img}`; 
+            const imgu = await fetch(apiUrl) 
+            setPimg(imgu.url) 
+        }, []);
+
+        return (
+
+            <div className="Category col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+                <div className="Category-name">
+                    {props.name}
+                </div>
+
+                <div className="Category-img">
+                    <img src={pimg} alt="category img"/>
+                </div>
+                 <div className="shop-now">
+                    <NavLink to={productidlink}>shop now</NavLink>
+                    </div>
+            </div>
+        )
+    }
       
     return (
         <>
             <div className="Categories container-fluid">
                 <div className="row">
               {Name.map((element,index)=>(
-                  
-                  <Category name={element.name} id={element._id} img="https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2019/July/amazonbasics_520x520._SY304_CB442725065_.jpg"/>
+                 
+                  <Category name={element.name} id={element._id} img={element.categoryImage}/>
                 
               )) } 
                 </div>

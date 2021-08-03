@@ -2,8 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import './item.scss';
 import { useParams } from 'react-router';
 import { ContextApi } from '../../App'
-import { NavLink } from "react-router-dom";
-// import { Scrollbars } from 'react-custom-scrollbars';
+import { NavLink } from "react-router-dom"; 
 const Item = () => {
 
     const { id } = useParams();
@@ -35,7 +34,7 @@ const Item = () => {
                 title ,
                 details 
             })
-        }); 
+        });
         const data = await res.json();  
         setRating({title:"",details:""}) 
         setautoreload(!autoreload)
@@ -69,17 +68,32 @@ const Item = () => {
             localStorage.setItem('products', JSON.stringify(products));
         }
         products = JSON.parse(localStorage.getItem('products'))
-        products.push({ _id: Product[0]._id, name: Product[0].name, price: Product[0].price, discount: Product[0].discount, quantity: 1 });
+        products.push({ _id: Product[0]._id, name: Product[0].name, price: Product[0].price, discount: Product[0].discount, quantity: 1 , img:Product[0].productImage });
         localStorage.setItem('products', JSON.stringify(products));
         alert("product added to Cart")
-    } 
+    }  
+    // **********************************************
+    const Img =({img})=>{
+        const [pimg, setPimg] = useState()
+        useEffect(async () => { 
+            const apiUrl = `/api/${img}`; 
+            const imgu = await fetch(apiUrl) 
+            setPimg(imgu.url)
+        }, []);
+        return(
+            <>
+                  <img src={pimg} alt="item image" />
+            </>
+        )
+    }
     return (
         <>
             <div className="container-fluid">
                 <div className="row">
                     <div className="item-img col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                        <img src="https://images-na.ssl-images-amazon.com/images/I/817Z%2BPHWz%2BL._AC_SL1500_.jpg" alt="item image" />
+                        <Img img={Product[0].productImage}/>
                     </div>
+              
                     <div className="item-details col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12">
                         <div className="item-name"> {Product[0].name} </div>
                         <div className="item-price"> Rs. {Product[0].price} /- </div>

@@ -12,45 +12,71 @@ async function getCategory(request, response){
       const category = await Category.findOne({_id})
       response.json({category})
 }
+// ************************ create category *********************************
+
+function validateCategory(data) {   //data == request.body
+      const productSchema = Joi.object({
+            name: Joi.string().required(),
+      })
+
+      const result = productSchema.validate(data)
+      return result;
+}
 
 async function createCategory(request, response ,next){
 
       const bearerToken = request.headers.authorization
-      console.log(request.body);
       if (!bearerToken) {
             return response.status(401).send("login first")
       }
-      let token = null;
-      
-      token = bearerToken.split(" ")[1]; 
+      let token = null; 
+      token = bearerToken.split(" ")[1];  
+      const loggedInUser = jwt.verify(token, process.env.JWT_KEY) 
 
-      const loggedInUser = jwt.verify(token, process.env.JWT_KEY)
-   
-      console.log("logged in user", loggedInUser);
+      console.log("reqbody",request.body)
+      console.log("file",request.file)
+      const categoryImage = "media/categories" + "/" + request.file.filename;
 
-      const schema =  Joi.object({
-            name:Joi.string().min(3).max(40).required(),
-      })
+      const validationResult = validateCategory(request.body)
 
-      const validateResult = schema.validate(request.body)
-
-      if(!validateResult.error){
-            const name = request.body.name;
-            const category = new Category({name})
-            const result = await category.save();
-           return response.json(result)
+      if (validationResult.error) {
+            return next(new Error(validationResult.error.details[0].message))
       }
 
-      const error = new Error(validateResult.error.details[0].message);
-      return next(error) 
+      let category = new Category({
+            ...validationResult.value,
+            categoryImage
+      })
+
+      category = await category.save();
+      response.json(category)
+     
+ 
 }
 
-async function getProductsByCategory(request, response){
-      const products = await Product.find({category : request.params.categoryId})
-      response.json({products})
-} 
+async function getProductsByCategory(request, response){ 
+      let page = Number.parseInt(request.query.page) || 1
+      const limit= Number.parseInt(request.query.products) || 8
+
+      if(page<0){
+            page=1
+      }
+     
+      const skip = limit*(page-1)
+
+      console.log("page",page);
+      console.log("limit",limit);
+      console.log("skip",skip);
+      const products = await Product.find({category : request.params.categoryId}).limit(limit).skip(skip)
+      const pages =Math.ceil(await Product.countDocuments() / limit)
+      console.log("count",pages);
+
+      const allproducts = await Product.find({category : request.params.categoryId}).limit(pages+1)
+ 
+      response.json({products , allproducts})
+}
 
 module.exports = {getCategories ,
        createCategory ,
-       getCategory,
+       getCategory ,
        getProductsByCategory}

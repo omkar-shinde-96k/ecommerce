@@ -5,8 +5,13 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
 
     const [CartLen, setCartLen] = useState("0")
+    const [toggle, setToggle] = useState(true)
 
-    useEffect(async() => {
+    const Toggle=()=>{
+        setToggle(!toggle)
+    }
+
+    useEffect(async () => {
         // const CartLength = JSON.parse(localStorage.getItem('products'))
         // let lengths = 0;
         // setCartLen(lengths)
@@ -20,23 +25,22 @@ const Navbar = () => {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
-            } 
+            }
         });
 
-        const data = await res.json();  
-        
+        const data = await res.json();
+
         if (data.cart) {
             setCartLen(data.cart.length)
         }
 
-    },[CartLen])
+    }, [CartLen])
 
     return (
         <>
-
             <navbar />
             <div className="navb">
-                <div className="Drawer">
+                <div onClick={Toggle} className="Drawer">
                     <i class=" fa fa-bars"></i>
                 </div>
 
@@ -48,7 +52,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="search">
-                    <div className="all">All &nbsp; <i class="fa fa-angle-down"></i></div>
+                    <div className="all" onClick={Toggle}>All &nbsp; <i class="fa fa-angle-down"></i></div>
                     <input type="text" />
                     <div className="search-icon"><i class="fa fa-search"></i></div>
                 </div>
@@ -64,13 +68,13 @@ const Navbar = () => {
             </div>
 
             <div className="search-media">
-                <div className="all">All &nbsp; <i class="fa fa-angle-down"></i></div>
+                <div className="all" onClick={Toggle}>All &nbsp; <i class="fa fa-angle-down"></i></div>
                 <input type="text" placeholder="&nbsp; Search here" />
                 <div className="search-icon"><i class="fa fa-search"></i></div>
             </div>
 
             <ul className="subnav">
-                <li>&nbsp; &nbsp; <i class="fa fa-bars"></i>  All</li>
+                <li onClick={Toggle} >&nbsp; &nbsp; <i class="fa fa-bars"></i>  All</li>
                 <li><NavLink className="navlink" to="orders">Best Sellers</NavLink></li>
                 <li><NavLink className="navlink" to="">Mobiles</NavLink></li>
                 <li><NavLink className="navlink" to="">Today's Deals</NavLink></li>
@@ -81,6 +85,46 @@ const Navbar = () => {
                 <li><NavLink className="navlink" to="">Costomer Services</ NavLink></li>
                 <li><NavLink className="navlink" to="">Amazon Pay</NavLink></li>
             </ul>
+
+            {toggle? "": 
+
+            <div className="drawer">
+                <div className="hello-user">
+                    <div onClick={Toggle} className="drawer-menu">
+                        <i class=" fa fa-bars"></i>
+                    </div>
+                    <div className="user-img">
+                        <img src="https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2019/July/amazonbasics_520x520._SY304_CB442725065_.jpg" width="90%" height="90%" />
+                    </div>
+                    <p>Hello, omkar shinde</p>
+                </div>
+                <div className="drawer-links">
+
+                    <NavLink className="navlink" to="/profile">Profile</NavLink>
+
+                    <NavLink className="navlink" to="/orders">My Orders </NavLink>
+
+                    <NavLink className="navlink" to="/orders">Cart </NavLink> 
+
+                    <hr/>
+                    <h6 style={{marginLeft:"25px"}}>Digital Content And Devices</h6>
+                    <NavLink className="navlink" to="">Echo & Alexa  </NavLink>  
+                    <NavLink className="navlink" to=""> Fire Tv</NavLink> 
+                    <NavLink className="navlink" to=""> Kindle E-Readers </NavLink> 
+                    <NavLink className="navlink" to=""> Audible Audiobooks </NavLink> 
+                    <NavLink className="navlink" to=""> Amazon Prime Video </NavLink> 
+                    <NavLink className="navlink" to=""> Amazon Prime Music </NavLink> 
+
+                    <hr/>
+                    <h6 style={{marginLeft:"25px"}}>Shop By Department</h6>
+                    <NavLink className="navlink" to=""> Mobiles, Tablets & More </NavLink> 
+                    <NavLink className="navlink" to=""> Tv, Audio & Cameras</NavLink> 
+
+
+
+                </div>
+            </div>
+            }
         </>
     )
 }

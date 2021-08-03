@@ -3,6 +3,7 @@
 const Schema = mongoose.Schema
 const categorySchema = new Schema({
       name: { type: String, require: true },
+      categoryImage:{type:String,require:true},
 }, {
       timestamps: {
             createAt: 'created_at',

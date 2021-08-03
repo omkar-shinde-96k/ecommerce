@@ -31,12 +31,19 @@ APIRouter.use('/categories', categoryRouter)
 APIRouter.use('/cart', cartRouter)
 APIRouter.use('/rating', ratingRouter)
 
- 
+
 APIRouter.get("/"+process.env.UPLOAD_FOLDER+"/*", (req, res, next) => {
       const path = req.url; 
       const filePath = `${__dirname}${path}` 
       res.sendFile(filePath); 
-      next()   // for show normal error => cannot get ....
+      // next()   // for show normal error => cannot get ....
+}); 
+
+APIRouter.get("/"+process.env.CATEGORY_UPLOAD_FOLDER+"/*", (req, res, next) => {
+      const path = req.url; 
+      const filePath = `${__dirname}${path}` 
+      res.sendFile(filePath); 
+      // next()   // for show normal error => cannot get ....
 }); 
 
 app.use(handleError)

@@ -32,8 +32,6 @@ const AddCategory = () => {
             window.alert("Category Added") 
             setName("")
         }
-
-        
     }
 
     return (
