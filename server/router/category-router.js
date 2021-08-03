@@ -30,7 +30,7 @@ categoryRouter.get('/',getCategories)
 categoryRouter.get('/:categoryId',getCategory)
 categoryRouter.get('/:categoryId/products',getProductsByCategory)
 
-categoryRouter.post('/', adminAuthMiddleware,upload.single('image'),createCategory)
+categoryRouter.post('/', adminAuthMiddleware,upload.single('categoryimage'),createCategory)
 
 module.exports = {categoryRouter} 
  

@@ -8,7 +8,7 @@ async function getCategories(request, response){
       response.json({categories})
 }
 async function getCategory(request, response){
-      const _id = request.params.categoryId
+      const _id = request.params.categoryId 
       const category = await Category.findOne({_id})
       response.json({category})
 }

@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react' ;
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+
 const AddProduct = () => {
     const [category, setCategory] = useState([])
 
@@ -10,92 +12,77 @@ const AddProduct = () => {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             }
         })
-        const data = await res.json(); 
+        const data = await res.json();
         setCategory(data.categories)
     }, [])
 
-    const [productData, setProductData] = useState({ name: "", price: "", details: "", discount: "", image:[], category: "" })
+    const [productData, setProductData] = useState({ name: "", price: "", details: "", discount: "" , category:"" })
+    const [image, setImage] = useState()
 
     let name;
-    let value ; 
+    let value;
 
     const InputHandler = (event) => {
-          name = event.target.name;
-          value = event.target.value; 
+        name = event.target.name;
+        value = event.target.value;
         setProductData({ ...productData, [name]: value })
-    } 
-
-    const FileHandler =(e)=>{
-        const file = e.target.files
-         
-        console.log("filkllll",file);
-
-        setProductData({ ...productData, image: file })
     }
 
-    // console.log("image is ",productData.image.name);
-    
-    const PostData = async (event) => {
- 
+    const PostData = async (event) => { 
         event.preventDefault();
-        const { name, price, details, discount, image, category } = productData;
-        const result = await fetch("/api/product", {
-            method: "POST",
+        const { name, price, details, discount, category } = productData; 
+
+        const dataArray = new FormData(); 
+        dataArray.append("name", name);
+        dataArray.append("price", price);
+        dataArray.append("details", details);
+        dataArray.append("discount", discount);
+        dataArray.append("category", category);
+        dataArray.append("image", image);
+
+ 
+        axios.post("/api/product", dataArray, {
             headers: {
-                // "Content-Type": "multipart/form-data",
-                "Content-Type": "formData",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
-            },
-            body: JSON.stringify({
-                name, price, details, discount, category
-            })
-        })
-
-        const data = await result.json()
-
-        console.log("data",data); 
-
-        if (result.status === 400 || !data ||data.error) {
-            window.alert(data.error)
-        } else {
-            window.alert(data.msg) 
-        }
+              "Content-Type": "multipart/form-data",
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
+            } 
+          })
+          .then((response) => { 
+            console.log("sucesss",response);
+            setImage("")
+            setProductData({ name: "", price: "", details: "", discount: "" , category: "" })
+          })
+          .catch((error) => { 
+            console.log(error);
+          }); 
     }
 
     return (
-        <form method="POST" enctype="multipart/form-data">
-            <div className="addproduct">
-
-                {productData.name}
-                {productData.price}
-                {productData.details}
-                {productData.discount}
-                {productData.category}
-                {/* {productData.image.file} */}
-
+        <form >
+            <div className="addproduct">  
                 <div className="inputbox">
                     <span>Name :</span>
-                    <input type="text" onChange={InputHandler} autoComplete="off" name="name" placeholder="&nbsp; Enter product name" />
+                    <input type="text" onChange={InputHandler}  value={productData.name} autoComplete="off" name="name" placeholder="&nbsp; Enter product name" />
                 </div>
 
                 <div className="inputbox">
-                    <span>More Info :</span>
-                    <input type="text" onChange={InputHandler} name="details" placeholder="&nbsp;Enter product Information" />
+                    <span>Details :</span>
+                    <input type="text" onChange={InputHandler} value={productData.details} name="details" placeholder="&nbsp;Enter product Information" />
                 </div>
 
                 <div className="inputbox">
                     <span>Price :</span>
-                    <input type="number" onChange={InputHandler} name="price" placeholder="&nbsp;Enter Product Price" />
+                    <input type="number" onChange={InputHandler} value={productData.price} name="price" placeholder="&nbsp;Enter Product Price" />
                 </div>
 
                 <div className="inputbox">
                     <span>Discount :</span>
-                    <input type="number" onChange={InputHandler} name="discount" placeholder="&nbsp;Discount" />
+                    <input type="number" onChange={InputHandler} value={productData.discount} name="discount" placeholder="&nbsp; Discount" />
                 </div>
 
                 <div className="inputbox">
                     <span>Product Image :</span>
-                    <input type="file" onChange={FileHandler} name="image" />
+                    <input type="file" onChange={(e) => setImage(e.target.files[0])}  />
                 </div>
 
                 <div className="inputbox" >
