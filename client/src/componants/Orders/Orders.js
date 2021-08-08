@@ -20,26 +20,38 @@ const Orders = () => {
     }])
 
     useEffect(async () => {
-        const res = await fetch('/api/orders', {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
-            }
-        })
-        const data = await res.json();
-        setData(data.orders)
-    }, []) 
+        try {
+
+            const res = await fetch('/api/orders', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            })
+            const data = await res.json();
+           
+            if (!data.error) {
+                 setData(data.orders)
+            } else { 
+                alert(data.error);
+                history.push("/login");
+            } 
+        } catch (error) {
+            console.log("error",error);
+        }
+
+    }, [])
 
     // ****************** img ****************************
-    const Img = ({img}) => {
+    const Img = ({ img }) => {
         const [pimg, setPimg] = useState()
         useEffect(async () => {
             const apiUrl = `/api/${img}`;
             const imgu = await fetch(apiUrl)
             setPimg(imgu.url)
         }, []);
-        return ( <img src={pimg} alt="order-img" /> 
+        return (<img src={pimg} alt="order-img" />
         )
     }
 
@@ -53,21 +65,21 @@ const Orders = () => {
                             <div className="order-img">
                                 <Img img={item.product.productImage} />
                             </div>
-                           
+
                             <div className="order-details">
                                 <div className="order-name">{item.product.name}</div>
 
-                                <div className="order-status">Order Status <span> placed </span></div>
+                                <div className="order-status">Order Status <span>{item.status}</span></div>
 
                                 <div className="order-delivar">Order Deliver on <span>saturday</span></div>
 
-                                <div className="order-price">Order Total Rs. {item.product.price}</div>
+                                <div className="order-price"><span>Order Total</span> Rs. {item.product.price}</div>
 
-                                <div className="order-quantity">Quantity :{item.quantity}</div>
+                                <div className="order-quantity"><span>Quantity :</span>{item.quantity}</div>
 
-                                <div className="payment-method">Rs.Cash On Delivery({item.payment_method})</div>
+                                <div className="payment-method">Cash On Delivery({item.payment_method})</div>
 
-                                <div className="order-address">Shipping Address : {item.address}</div>
+                                <div className="order-address"> <span>Shipping Address</span> : {item.address}</div>
 
                                 <div className="order-date">Order Date : {item.created_at}</div>
 

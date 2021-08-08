@@ -34,7 +34,7 @@ console.log("hey",item);
                     </div>
                     <hr /> 
                     {totalItem?
-                        <div style={{ margin: "0", padding: "0", height: "430px" , overflow:"scroll"}}>
+                        <div style={{ margin: "0", padding: "0", height: "530px" ,overflow:"scroll"}}>
 
                             {item.map((element, index) =>
                             (
@@ -52,7 +52,7 @@ console.log("hey",item);
                                             <div className="product-quantity">
                                                 <button onClick={() => decrement(element._id, element.quantity)} >-</button> {element.quantity} <button onClick={() => increment(element._id, element.price)} >+</button> &nbsp;&nbsp;&nbsp;&nbsp;
 
-                                        <div className="delete" onClick={() => removeItem(element._id)} ><i class="fa fa-trash-o"></i>
+                                        <div className="delete" onClick={() => removeItem(element._id)} ><i className="fa fa-trash-o"></i>
 
                                                 </div>
                                                 <p>Save For Later</p>

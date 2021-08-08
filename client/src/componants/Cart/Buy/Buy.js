@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
-import './Buy.scss' 
+import './Buy.scss' ;
 import { ContextApi } from "../../../App";
+import { useHistory } from "react-router-dom";
 const Buy = () => {
+    let history = useHistory();
  
     const { item, totalAmount,User } = useContext(ContextApi);  
 
@@ -30,7 +32,13 @@ const Buy = () => {
             });
             const data = await res.json(); 
             if (data) {
-                alert("order placed")
+                if (data.msg=="Please add address") {
+                    alert(data.msg); 
+                    history.push("/profile");
+                } else {
+                    alert("order placed")
+                    history.push("/");
+                } 
             } else {
                 alert("404 error")
             }

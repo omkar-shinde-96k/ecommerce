@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import './login.scss'
 const Login = () => {
     const history = useHistory();
@@ -44,7 +44,7 @@ const Login = () => {
         } else {
             localStorage.setItem('jwt', data.token);
             window.alert(data.msg)
-            // history.push("/")
+            history.push("/profile")
         }
     }
     return (
@@ -52,8 +52,7 @@ const Login = () => {
 
             <div className="register">
                 <div className="box">
-                    <h1>Amazon.com</h1>
-                    {user.email} {user.password}
+                    <h1>Amazon.com</h1> 
                     <form method="POST">
 
                         <div className="input-div">
@@ -71,7 +70,8 @@ const Login = () => {
                             <input type="password" value={user.password} name="password" onChange={handleInputs} placeholder=" Password" />
                         </div>
 
-                        <button type="submit" name="signup" value="register" onClick={PostData}>Sign Up</button>
+                        <button type="submit" name="signup" value="register" onClick={PostData}>Sign In</button>
+                        <NavLink align="center" to="/register">Create Account</NavLink>
 
                     </form>
                 </div>

@@ -32,7 +32,7 @@ const Categories = () => {
                 </div>
 
                 <div className="Category-img">
-                    <img src={pimg} alt="category img"/>
+                <NavLink to={productidlink}> <img src={pimg} alt="category img"/></NavLink>
                 </div>
                  <div className="shop-now">
                     <NavLink to={productidlink}>shop now</NavLink>
@@ -47,7 +47,7 @@ const Categories = () => {
                 <div className="row">
               {Name.map((element,index)=>(
                  
-                  <Category name={element.name} id={element._id} img={element.categoryImage}/>
+                  <Category name={element.name} key={index} id={element._id} img={element.categoryImage}/>
                 
               )) } 
                 </div>

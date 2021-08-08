@@ -15,7 +15,7 @@ const Reducer = (state, action) => {
       const _id = action.payload; 
       let increment = state.item.map((cur) => {
         if (cur._id === _id) {
-          const originalprice = cur.price
+          // const originalprice = cur.price
           return { ...state.item[_id], _id, quantity: cur.quantity + 1,img:cur.img, name: cur.name, price: cur.price, total: cur.total + cur.price, discount: cur.discount };
         }
         return cur;
@@ -36,20 +36,12 @@ const Reducer = (state, action) => {
       }) 
       localStorage.setItem('products', JSON.stringify(lesszero));
       return { ...state, item: lesszero };
-    } 
+    }
     if (action.type === "GET_TOTAL") {
       let { totalItem, totalAmount } = state.item.reduce(
         (accum, curVal) => {
           let { price, quantity } = curVal; 
-
-
-
-
-
-
-
-
-
+ 
                     let updatedTotalAmount = price * quantity;
           accum.totalAmount += updatedTotalAmount; 
           accum.totalItem += quantity;

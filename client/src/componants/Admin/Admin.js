@@ -10,8 +10,7 @@ import {
 } from 'react-router-dom'
 import AllOrders from './AllOrders';
 import AddCategory from './AddCategory';
-import AddProduct from './AddProduct';
-import CreateProduct from './CreateProduct';
+import AddProduct from './AddProduct'; 
 
 const Admin = () => {
 
@@ -34,10 +33,8 @@ const Admin = () => {
         })
         const result = await res.json()
         setOrders(result.orders)
-
-
+ 
     }, [Product.length]);
-
 
 
 
@@ -48,9 +45,10 @@ const Admin = () => {
                 <NavLink to="/admin">All Orders</NavLink>
                 <NavLink to="/admin/addproduct">Add Product</NavLink>
                 <NavLink to="/admin/addcategory">Add category</NavLink>
-                <NavLink to="/admin/createproduct">  createproduct</NavLink>
+               
             </div>
-            <div className="rightbar col-xl-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
+            <div className="rightbar col-xl-10 col-lg-10 col-md-10 col-sm-10 col-xs-10"  style={{  height: "630px"  ,overflow:"scroll"}}>
+
                 <div className="row ">
                     <div className="box  col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-6">
                         <div>
@@ -88,10 +86,7 @@ const Admin = () => {
 
                         <Route path="/admin/addproduct" component={AddProduct} />
                         <Route path="/admin/addcategory" component={AddCategory} />
-
-                        {/* <Route path="/admin/createproduct" component={CreateProduct} /> */}
-
-
+  
                     </Switch>
                 </div>
 

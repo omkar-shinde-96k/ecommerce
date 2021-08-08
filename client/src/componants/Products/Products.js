@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import './products.scss';
-const Main = (props) => {
+const Main = () => {
     const { id } = useParams();
 
     const ProductComp = (props) => {
@@ -20,7 +20,7 @@ const Main = (props) => {
                 <div className="product col-xl-3 col-lg-4 col-md-6 col-sm-12 col-xs-12 ">
                     <NavLink to={productidlink} >
                         <div className="product-img">
-                            <img src={pimg} width="100%" height="100%" />
+                            <img src={pimg} width="100%" height="100%" alt="product image"/>
                         </div>
                     </NavLink>
                     <div className="product-dics"> {props.name} </div>
@@ -44,12 +44,12 @@ const Main = (props) => {
     if (page <= 0) {
         setPage(allproducts.length - 1)
     }
-    // if (page >=4) {
-    //     setPage(1)
-    // }
+    if (page >=4) {
+        setPage(1)
+    }
 
     useEffect(() => {
-        const products = 4
+        const products = 8
         const apiUrl = `/api/categories/${id}/products?page=${page}&products=${products}`;
         fetch(apiUrl)
             .then((res) => res.json())
@@ -63,15 +63,13 @@ const Main = (props) => {
         < >
             <div className="filters">
                 <div className="total-result">over {Product.length} results</div>
-                <div className="total-sort">
-                    <form action="/action_page.php">
+                <div className="total-sort"> 
                         <select name="cars" id="cars">
-                            <option value="volvo">sort by: Featured</option>
-                            <option value="saab">Sort by : low to hei</option>
-                            <option value="opel">Opel</option>
-                            <option value="audi">Audi</option>
+                            <option value="volvo"> Featured</option>
+                            <option value="saab">  Price Low to High</option>
+                            <option value="opel"> Price High to Low</option>
+                            <option value="audi">Most Reviewed</option>
                         </select>
-                    </form>
                 </div>
             </div>
 

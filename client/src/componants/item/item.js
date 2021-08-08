@@ -2,87 +2,95 @@ import React, { useEffect, useState, useContext } from 'react';
 import './item.scss';
 import { useParams } from 'react-router';
 import { ContextApi } from '../../App'
-import { NavLink } from "react-router-dom"; 
+import { NavLink } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 const Item = () => {
-
+    const history = useHistory();
     const { id } = useParams();
     const [Product, setProduct] = useState([{ name: "loading..." }])
-    const [rating, setRating] = useState({title:"",details:""})
+    const [rating, setRating] = useState({ title: "", details: "" })
     const [getrating, setgetRating] = useState([])
     const [autoreload, setautoreload] = useState(true)
 
-    let { User } = useContext(ContextApi); 
+    let { User } = useContext(ContextApi);
 
-    const handleInputs = (event) => { 
+    const handleInputs = (event) => {
         let name = event.target.name;
-        let value = event.target.value;  
-         setRating({ ...rating, [name]: value }) 
-     } 
+        let value = event.target.value;
+        setRating({ ...rating, [name]: value })
+    }
 
     const PostData = async (event) => {
         event.preventDefault();
-        const { title, details } = rating; 
-        const res = await fetch("/api/rating", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
-            },
-            body: JSON.stringify({
-                user: User._id,
-                product: Product[0]._id,
-                title ,
-                details 
-            })
-        });
-        const data = await res.json();  
-        setRating({title:"",details:""}) 
-        setautoreload(!autoreload)
-        if (res.status === 400 || !data) { 
-            window.alert("please check your internet connection")
-        } 
+        try {
+
+            const { title, details } = rating;
+            const res = await fetch("/api/rating", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                },
+                body: JSON.stringify({
+                    user: User ? User._id : "temp id",
+                    product: Product[0]._id,
+                    title,
+                    details
+                })
+            });
+            const data = await res.json();
+            if (!data.error) {
+                setRating({ title: "", details: "" })
+                setautoreload(!autoreload)
+            } else {
+                alert(data.error)
+            } 
+        } catch (error) {
+            console.log("error", error);
+        }
     }
 
-    
+
     useEffect(async () => {
 
         fetch(`/api/product/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setProduct(data.product)
-            }); 
-            const res = await fetch(`/api/rating/${id}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("jwt")
-                }
-            })
-            const data = await res.json(); 
-            setgetRating(data.rating)    
-    },[autoreload]); 
-   
+            });
+        const res = await fetch(`/api/rating/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                // "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        })
+        const data = await res.json();
+        setgetRating(data.rating)
+    }, [autoreload]);
+
     const Cart = async () => {
         let products = [];
         if (!JSON.parse(localStorage.getItem('products'))) {
             localStorage.setItem('products', JSON.stringify(products));
         }
         products = JSON.parse(localStorage.getItem('products'))
-        products.push({ _id: Product[0]._id, name: Product[0].name, price: Product[0].price, discount: Product[0].discount, quantity: 1 , img:Product[0].productImage });
+        products.push({ _id: Product[0]._id, name: Product[0].name, price: Product[0].price, discount: Product[0].discount, quantity: 1, img: Product[0].productImage });
         localStorage.setItem('products', JSON.stringify(products));
         alert("product added to Cart")
-    }  
+        history.push("/cart");
+    }
     // **********************************************
-    const Img =({img})=>{
+    const Img = ({ img }) => {
         const [pimg, setPimg] = useState()
-        useEffect(async () => { 
-            const apiUrl = `/api/${img}`; 
-            const imgu = await fetch(apiUrl) 
+        useEffect(async () => {
+            const apiUrl = `/api/${img}`;
+            const imgu = await fetch(apiUrl)
             setPimg(imgu.url)
         }, []);
-        return(
+        return (
             <>
-                  <img src={pimg} alt="item image" />
+                <img src={pimg} alt="item image" />
             </>
         )
     }
@@ -91,9 +99,9 @@ const Item = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="item-img col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                        <Img img={Product[0].productImage}/>
+                        <Img img={Product[0].productImage}  />
                     </div>
-              
+
                     <div className="item-details col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12">
                         <div className="item-name"> {Product[0].name} </div>
                         <div className="item-price"> Rs. {Product[0].price} /- </div>
@@ -110,9 +118,9 @@ const Item = () => {
                             <p> {Product[0].details}</p>
                         </div>
                     </div>
-                    <div className="item-details cart-outer-sec col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12"> 
+                    <div className="item-details cart-outer-sec col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
                         <div className="cart-sec">
-                            <div className="withexchange">&nbsp; With Exchange</div> 
+                            <div className="withexchange">&nbsp; With Exchange</div>
                             <div className="withoutexchange">
                                 <h6> Withot Exchange </h6>
                                 <p>
@@ -122,14 +130,14 @@ const Item = () => {
                                             <span>Rs.{element.price + 500}</span>
                                         </>
                                     ))}
-                                </p> 
-                            </div> 
-                            <button className="addtocart" onClick={Cart}>Add To Cart</button> 
-                            <button className="buynow" onClick={Cart}>Buy Now</button> 
+                                </p>
+                            </div>
+                            <button className="addtocart" onClick={Cart}>Add To Cart</button>
+                            <button className="buynow" onClick={Cart}>Buy Now</button>
                             <div className="order-diliver-to">
-                                <i class="fa fa-map-marker"></i> <NavLink to="/dashbord/profile">Diliver to {User.first_name} - {User.address} </NavLink>
-                            </div> 
-                        </div> 
+                                <i className="fa fa-map-marker"></i> <NavLink to="/profile">Diliver to  {User ? User.first_name : ""} - {User ? User.address : "Login First"}   </NavLink>
+                            </div>
+                        </div>
                         <button className="addtowishlist">
                             Add To Wish List
                         </button>
@@ -154,36 +162,36 @@ const Item = () => {
                         <div className="write-review col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
                             <form method="POST">
                                 <h4>Write Review</h4>
-                                <input type="text"  value={rating.title} name="title" onChange={handleInputs}  placeholder="Title" />
-                                <input type="text"  value={rating.details} name="details" onChange={handleInputs} placeholder="Write your review" />
+                                <input type="text" value={rating.title} name="title" onChange={handleInputs} placeholder="Title" />
+                                <input type="text" value={rating.details} name="details" onChange={handleInputs} placeholder="Write your review" />
                                 <button onClick={PostData}>Submit</button>
                             </form>
                             <hr />
                             {getrating.map((element, index) => (
-                            <div className="buyers-reviews">
-                                <div className="buyers">
-                                    <div className="buyers-img">
-
+                                <div className="buyers-reviews">
+                                    <div className="buyers">
+                                        <div className="buyers-img">
+                                         
+                                        </div>
+                                        <div className="buyers-name">
+                                            &nbsp; {element.user.first_name} &nbsp;
+                                            {element.user.last_name}
+                                        </div>
                                     </div>
-                                    <div className="buyers-name">
-                                    &nbsp; {element.user.first_name} &nbsp;
-                                      {element.user.last_name}
+                                    <div className="buyer-rating-title">
+                                        <div className="buyer-rating">
+                                            3.2
+                                        </div>
+                                        <div className="buyer-title">
+                                            &nbsp; <b>{element.title}</b>
+                                        </div>
+                                    </div>
+                                    <p>Reviewed in India on 18 December 2020</p>
+                                    <div className="detail-review">
+                                        {element.details}
                                     </div>
                                 </div>
-                                <div className="buyer-rating-title">
-                                    <div className="buyer-rating">
-                                        3.2 
-                                    </div>
-                                    <div className="buyer-title">
-                                    &nbsp; <b>{element.title}</b>
-                                    </div>
-                                </div>
-                                <p>Reviewed in India on 18 December 2020</p>
-                                <div className="detail-review">
-                                {element.details}
-                                </div>
-                            </div>
-                              ))}  
+                            ))}
                         </div>
                     </div>
                 </div>

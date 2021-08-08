@@ -8,10 +8,15 @@
     margin:0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 .admin{ 
     width: 100%;
     height: 100%;
+    ::-webkit-scrollbar{ 
+        display: none;
+      }
+      
     .sidebar{
         width: 100%;
         height: 600px;
@@ -66,17 +71,22 @@
                 @include flexCenter(row);
                 margin-bottom: 1rem;
                 font-weight: bold;
+                font-size: 0.7rem;
                 background-color: white;
                 box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.493); 
                 padding: 10px 0 10px 0; 
                 position: sticky;
-                top:60px;
+                top:0px; 
                 .imgname{
                     width:10%;
                     @include flexCenter(row);
+                    @media (max-width:500px) {
+                       display: none;
+                     }
                 }
                 .product-name{
-                    width:30%;
+                    
+                    width:60%;
                     @include flexCenter(row);
                 }
                 .address{
@@ -103,32 +113,35 @@
 
             
             .admin-order{
-                padding: 10px 0;
-                // margin: 0 0 1.3rem 0;
+                padding: 1rem 0;
+                margin: 0 0 1.3rem 0;
                 @include flexCenter(row);
-                height: 200px;
+                height: 100%;
                 box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.493); 
                 .order-img{
                     width:10%;
+                    @media (max-width:500px) {
+                       display: none;
+                     }
                     height: 50% !important; 
                     img{
                         width: 100%;
-                        height: 100%; 
+                        height: 80%; 
                     }
                 }
 
                 .order-name{
-                    width:30%;
+                    width:60%;
                     height: 100%;
                     @include flexCenter(row);
-                    padding:0 10px; 
+                    padding:0 10px;  
                 }
 
                 .order-address{
                     width:36%;
                     height: 100%;
                     @include flexCenter(row);
-                    padding:0 0 0 10px;
+                    padding:0 0 0 10px; 
                 }
                 .order-status{
                     width:10%;
@@ -153,6 +166,8 @@
                 .order-delete{
                     width:5%;
                     height: 100%;
+                    font-size: 2rem;
+                    cursor: pointer;
                     @include flexCenter(row);
                     color:red;
                 }
@@ -239,3 +254,8 @@
         }
     }
 }
+
+
+
+
+  

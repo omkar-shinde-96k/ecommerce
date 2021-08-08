@@ -1,8 +1,8 @@
-import React, { useState, useEffect,useContext } from 'react'
-import './Profile.scss'
-
+import React, { useState, useEffect,useContext } from 'react';
+import './Profile.scss';
+import { useHistory } from "react-router-dom";
 const Profile = () => {
-
+    let history = useHistory();
 
 
     const [user, setUser] = useState({
@@ -18,16 +18,23 @@ const Profile = () => {
     // *****************************************************
 
     useEffect(async () => {
+        try {
+       
         const res = await fetch('/api/users', {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
-            }
+            headers: { "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")}
         })
-        const data = await res.json();
-
-        setUser({ first_name: data[0].first_name, last_name: data[0].last_name, email: data[0].email, phone: data[0].phone, address: data[0].address })
+        const data = await res.json(); 
+        if (data.error) {
+            history.push("/login");
+        } else {
+            setUser({ first_name: data[0].first_name, last_name: data[0].last_name, email: data[0].email, phone: data[0].phone, address: data[0].address })
+        } 
+    } catch (error) {
+            console.log(error);
+          
+    }
 
     }, [])
 
@@ -48,16 +55,11 @@ const Profile = () => {
             })
         })
         const data = await res.json();
-        if (res.status === 400 || !data) {
-            window.alert("error")
-        } else {
-            window.alert("Profile Updated")
-        }
+        window.alert(data.msg) 
     }
 
-
     return (
-        <form method="POST">
+        <form method="POST"  >
             <div className="profile-edit">
                 <div className="label">
                     <span>First Name :</span> <input type="text" name="first_name" onChange={inputHandler} value={user.first_name} />

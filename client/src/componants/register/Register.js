@@ -38,7 +38,7 @@ const Register = () => {
         console.log(data);
 
         if(res.status===400 || !data){
-            window.alert(data.error)
+            window.alert("data.error")
         }else{
             localStorage.setItem('jwt',data.token);
             window.alert("sucessfull registration") 
