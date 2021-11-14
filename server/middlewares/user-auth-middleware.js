@@ -17,8 +17,7 @@ const userAuthMiddleware = async (req, res, next) => {
                   // console.log("onmkkkk", userdata);
                   next()
 
-            })
-
+            }) 
 
       } catch (error) {
             console.log(error)

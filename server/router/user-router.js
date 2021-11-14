@@ -12,7 +12,7 @@ const {userAuthMiddleware , adminAuthMiddleware} =  require('../middlewares/user
 
 const userRouter = express.Router()
 
-userRouter.get('/',getUser);  //to check router is working or not
+userRouter.get('/',userAuthMiddleware,getUser);  //to check router is working or not
 userRouter.post('/',saveUser); //register new user
 userRouter.put('/',userAuthMiddleware, updateUser);  //update login user
 userRouter.put('/:user_id',adminAuthMiddleware, updateUserById); //admin can update any user

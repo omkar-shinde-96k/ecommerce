@@ -5,6 +5,7 @@ const ratingRouter = express.Router()
 
 ratingRouter.get ('/:productId',async(req,res)=>{
     const product = req.params.productId
+    console.log("hhhh",product);
     const rating = await Rating.find({product}).populate([
         {
               path: "user" 
@@ -14,7 +15,7 @@ ratingRouter.get ('/:productId',async(req,res)=>{
     res.json({rating})
 })
 
-ratingRouter.post('/', async(req, res) => { 
+ratingRouter.post('/',userAuthMiddleware, async(req, res) => { 
   console.log(req.body);
     try {
         user = await new Rating(req.body).save()

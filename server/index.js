@@ -48,12 +48,7 @@ APIRouter.get("/"+process.env.CATEGORY_UPLOAD_FOLDER+"/*", (req, res, next) => {
 
 app.use(handleError)
 
-
-
-
-
-
-
+ 
 
 
 

@@ -89,7 +89,7 @@ async function saveUser(request, response, next) {
 function validateLoginCredentials(body) {
       const schema = Joi.object({
             email: Joi.string().email().required(),
-            password: Joi.string().min(6).max(40).required()
+            password: Joi.string().required()
       });
 
       const result = schema.validate(body)
@@ -154,22 +154,23 @@ async function updateUser(request, response, next) {
             phone: Joi.string().min(10).max(13),
             first_name: Joi.string().min(4).max(40),
             last_name: Joi.string().min(6).max(40),
-            address: Joi.string().min(6),
+            address: Joi.string(),
             password: Joi.string().min(6).max(40),
-            email: Joi.string().min(6).max(40)
+            email: Joi.string().email().min(6).max(20)
       });
 
       const result = schema.validate(request.body);
       // result.value.password = passwordHash.generate(result.value.password)
 
-      if (result.error) {
+      if (result.error) { 
+            response.json({ msg:result.error.details[0].message})
             return next(new Error(result.error.details[0].message));
       } else {
             const user = await User.findOneAndUpdate(
                   { _id: loggedInUser._id }, { $set: result.value}, { new: true }
             ); 
       }
-      response.json({ msg: "update req" })
+      response.json({ msg: "Profile Updated" })
 }
 
 // ************** start : Update another user (only admin can) ****************

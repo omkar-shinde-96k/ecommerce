@@ -11,7 +11,7 @@ async function getCategory(request, response){
       const _id = request.params.categoryId 
       const category = await Category.findOne({_id})
       response.json({category})
-}
+} 
 // ************************ create category *********************************
 
 function validateCategory(data) {   //data == request.body
@@ -55,28 +55,23 @@ async function createCategory(request, response ,next){
 }
 
 async function getProductsByCategory(request, response){ 
-      let page = Number.parseInt(request.query.page) || 1
-      const limit= Number.parseInt(request.query.products) || 8
-
+      let page = Number.parseInt(request.query.page)
+      const limit= Number.parseInt(request.query.products)  
+       
       if(page<0){
             page=1
-      }
-     
-      const skip = limit*(page-1)
-
-      console.log("page",page);
-      console.log("limit",limit);
-      console.log("skip",skip);
+      } 
+      const skip = limit*(page-1) 
+      
       const products = await Product.find({category : request.params.categoryId}).limit(limit).skip(skip)
-      const pages =Math.ceil(await Product.countDocuments() / limit)
-      console.log("count",pages);
-
+      const pages =Math.ceil(await Product.countDocuments({category : request.params.categoryId}) / limit) 
       const allproducts = await Product.find({category : request.params.categoryId}).limit(pages+1)
- 
+      
       response.json({products , allproducts})
 }
 
 module.exports = {getCategories ,
        createCategory ,
        getCategory ,
-       getProductsByCategory}
+       getProductsByCategory
+      }
