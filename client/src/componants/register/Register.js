@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {useHistory} from 'react-router-dom'
-import './register.scss'
+import './register.scss';
 const Register = () => {
     const history = useHistory();
 

@@ -1,4 +1,5 @@
 {
+  "homepage": "https://awesome-app.vercel.app",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -9,7 +10,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "jwt-decode": "^3.1.2",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-loadable": "^5.5.0",

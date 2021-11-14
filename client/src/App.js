@@ -126,7 +126,7 @@ function App() {
 
   return (
     <div style={{ width: "99.70vw" }}>
-      <Router>
+      <Router  basename='/'>
         <Navbar />
         <ContextApi.Provider value={{ ...state, User, clearCart, removeItem, increment, decrement }}>
           <Switch>
